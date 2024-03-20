@@ -9,38 +9,29 @@
 <body>
   
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-  if (!('Notification' in window)) {
-    console.log('الإشعارات غير مدعومة في هذا المتصفح');
-  } else if (Notification.permission === 'granted') {
-    // إذا كانت الأذونات ممنوحة مسبقًا، أرسل إشعار
-    var notification = new Notification('مرحبًا بك في الموقع!');
-  } else if (Notification.permission !== 'denied') {
-    // اطلب الإذن من المستخدم
-    Notification.requestPermission().then(function (permission) {
-      // إذا وافق المستخدم، أرسل إشعار
-      if (permission === 'granted') {
-        var notification = new Notification('مرحبًا بك في الموقع!');
-      }
-    });
-  }
-});
-
-// تأكد من أن المتصفح يدعم الإشعارات
+    // Check if the browser supports notifications
 if ('Notification' in window) {
-  // اطلب الإذن للإشعارات عند تحميل الصفحة
-  window.addEventListener('load', function() {
-    Notification.requestPermission().then(function(result) {
-      if (result === 'granted') {
-        // أرسل إشعارًا إذا تم منح الإذن
-        new Notification('مرحبًا بك في الموقع!');
-      }
-    });
-  });
-} else {
-  console.log('الإشعارات غير مدعومة في هذا.  nn.      b.     b. المتصفح');
-}
+    // Request permission to display notifications
+    Notification.requestPermission(function(permission) {
+        if (permission === 'granted') {
+            // If the user grants permission, display a notification
+            document.addEventListener('DOMContentLoaded', function() {
+                const notificationTitle = 'Welcome to my site!';
+                const notificationText = 'Thank you for visiting.';
+                const notificationOptions = {
+                    body: notificationText,
+                    icon: 'images.jpeg',
+                    dir: 'ltr',
+                    lang: 'en-US',
+                    vibrate: [100, 50, 100],
+                    tag: 'my-simple-notification'
+                };
 
+                new Notification(notificationTitle, notificationOptions);
+            });
+        }
+    });
+}
   </script>
 </body>
 </html>
